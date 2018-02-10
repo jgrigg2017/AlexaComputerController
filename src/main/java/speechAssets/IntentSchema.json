@@ -1,0 +1,36 @@
+{
+	"intents": [
+		{
+			"intent": "HelloWorldIntent"
+		},
+		{
+			"intent": "AMAZON.HelpIntent"
+		},
+		{
+			"intent": "VLCPlayIntent"
+		},
+		{
+			"intent": "VLCPauseIntent"
+		},
+		{
+			"intent": "VLCStopIntent"
+		},
+		{
+			"intent": "VLCNextIntent"
+		},
+		{
+			"intent": "VLCPreviousIntent"
+		},
+		{
+			"intent": "VLCFullscreenIntent"
+		},
+		{
+			"intent": "VLCVolumeUpIntent",
+			"slots": [{
+				"name": "Volume",
+				"type": "AMAZON.NUMBER"
+			}]
+		}
+		
+	]
+}
