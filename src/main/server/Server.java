@@ -1,4 +1,5 @@
-package server;
+package main.server;
+
 
 import java.util.*;
 
@@ -18,7 +19,7 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 import java.io.*;
 
-import abc.VLCCommands;
+import main.server.VLCCommands;
 
 public class Server {
 	
