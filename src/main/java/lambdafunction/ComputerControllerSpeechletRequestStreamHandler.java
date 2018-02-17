@@ -1,9 +1,11 @@
-package lambdafunction;
+package main.java.lambdafunction;
 
 import java.util.HashSet;
 import java.util.Set;
 
 import com.amazon.speech.speechlet.lambda.SpeechletRequestStreamHandler;
+
+import main.java.settings.Settings;
 
 /**
  * This class could be the handler for an AWS Lambda function powering an Alexa Skills Kit
@@ -21,7 +23,7 @@ public final class ComputerControllerSpeechletRequestStreamHandler extends Speec
          * This Id can be found on https://developer.amazon.com/edw/home.html#/ "Edit" the relevant
          * Alexa Skill and put the relevant Application Ids in this Set.
          */
-        supportedApplicationIds.add("amzn1.ask.skill.2fcc8d6a-c8e4-49e3-8bf4-1803f434d643");
+        supportedApplicationIds.add(Settings.applicationID);
     }
 
     public ComputerControllerSpeechletRequestStreamHandler() {

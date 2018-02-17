@@ -1,4 +1,4 @@
-package lambdafunction;
+package main.java.lambdafunction;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +15,6 @@ import com.amazon.speech.speechlet.SpeechletResponse;
 import com.amazon.speech.ui.PlainTextOutputSpeech;
 import com.amazon.speech.ui.Reprompt;
 import com.amazon.speech.ui.SimpleCard;
-
 import com.amazon.speech.slu.Slot;
 
 import java.net.URL;
@@ -23,6 +22,8 @@ import java.util.Map;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.io.IOException;
+
+import main.java.settings.Settings;
 
 
 /**
@@ -58,7 +59,7 @@ public class ComputerControllerSpeechlet implements Speechlet {
         String intentName = (intent != null) ? intent.getName() : null;
         Map<String, Slot> slots = intent.getSlots();
         
-        String urlString = "";
+        String urlString = Settings.urlString;
         String queryString = "";
         String speechText = "";
         SimpleCard card = new SimpleCard();
