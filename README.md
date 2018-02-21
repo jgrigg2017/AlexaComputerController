@@ -94,7 +94,7 @@ mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
 - To configure the trigger, you can either disable "Skill ID verification" or copy/paste the Alexa Skill Application ID under "Skill ID."
 - Click "Add" at the bottom, then "Save" in the top right.
 
-![]( [https://i.imgur.com/cutox06.png](https://i.imgur.com/cutox06.png))
+![](https://i.imgur.com/cutox06.png)
 
 **Note:** For a more detailed guide, refer to the [Amazon developer documentation](https://developer.amazon.com/docs/custom-skills/host-a-custom-skill-as-an-aws-lambda-function.html#create-a-lambda-function-for-an-alexa-skill).
 
