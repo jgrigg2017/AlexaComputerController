@@ -6,7 +6,7 @@ This Github project demonstrates how you can control a computer using an Amazon 
 
 ### How it works:
 
-1. The user first starts up a basic http server (Server.java), which listens for any command requests and executes the associated command scripts. The server should be kept running whenever the computer is on, so that it is always ready to execute Alexa commands.
+1. The user first starts up a basic http server ([Server.java](src/main/server/Server.java)), which listens for any command requests and executes the associated command scripts. The server should be kept running whenever the computer is on, so that it is always ready to execute Alexa commands.
 
 2. The user speaks a command to their Alexa device, e.g. "Turn up the volume on VLC by 25".
 
@@ -19,7 +19,7 @@ This Github project demonstrates how you can control a computer using an Amazon 
 ### Usage Example:
 User: "Alexa, tell computer to press stop" <br />
 (Alexa connects to http://[server address]/ComputerController/?VLCStop) <br />
-(Server.java receives the request and executes VLCCommands.stop()) <br />
+([Server.java](src/main/server/Server.java) receives the request and executes VLCCommands.stop()) <br />
 Alexa: "VLC stopped"
 
 ## SETUP
@@ -30,7 +30,7 @@ Alexa: "VLC stopped"
 
 2) Clone this Github project to your computer.
 
-3) Edit "Settings-TODO.java" to include your computer's WAN IP address and rename the file "Settings.java"
+3) Edit [Settings-TODO.java](\src\main\java\settings\Settings-TODO.java) to include your computer's WAN IP address and rename the file "Settings.java"
 
 4) Unless your computer is directly connected to the internet, you will likely need to set up port forwarding on your router to forward port 80 traffic (the http standard port) to your computer's LAN IP address.
 
@@ -55,7 +55,7 @@ Alexa: "VLC stopped"
 
 ### Building the .jar file:
 
-1. Open command prompt and change directory to the folder containing the project's pom.xml file.
+1. Open command prompt and change directory to the folder containing the project's [pom.xml](/pom.xml) file.
 2. Enter the following command: <br />
 ```
 mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
@@ -104,16 +104,16 @@ mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
 2. For "Service Endpoint Type" select "AWS Lambda ARN (Amazon Resource Name)."
 3. In the "Default" entry field, enter your Lambda function's ARN that you wrote down earlier. It looks something this: "arn:aws:lambda:us-east-1:58651155688:function:ComputerController"
 4. Select "Next" at the bottom of the screen.
-5. This should complete the setup of your custom Alexa Skill. Make sure your computer is running "Server.java" and you can now test your skill either through the Amazon Developer Console or through an Alexa device such as an Amazon Echo that is linked to your Amazon Developer account.
+5. This should complete the setup of your custom Alexa Skill. Make sure your computer is running [Server.java](src/main/server/Server.java) and you can now test your skill either through the Amazon Developer Console or through an Alexa device such as an Amazon Echo that is linked to your Amazon Developer account.
 
 ## Make your own custom commands:
 
-1) Define the speech interface by editing the SampleUtterances.txt and IntentSchema.json located in \src\main\java\speechAssets (link to Amazon.com tutorial). Open your Alexa skill in the Amazon Developer Console, copy/paste the new Sample Utterances and Intent Schema, and save the changes made to your skill.
+1) Define the [speech interface](https://developer.amazon.com/docs/custom-skills/define-the-interaction-model-in-json-and-text.html) by editing the [SampleUtterances.txt](/src/main/java/speechAssets/SampleUtterances.txt) and [IntentSchema.json](/src/main/java/speechAssets/IntentSchema.json). Open your Alexa skill in the Amazon Developer Console, copy/paste the new Sample Utterances and Intent Schema, and save the changes made to your skill.
 
-2) Edit ComputerControllerSpeechlet.onIntent() to add a url query string that will be linked to your command.
+2) Edit [ComputerControllerSpeechlet](/src/main/java/lambdafunction/ComputerControllerSpeechlet.java).onIntent() to add a url query string that will be linked to your command.
 
 3) Write a script for your custom ui/gui automation function.
 
-4) Open Server.java, import your custom command, and add a switch case to Server.executeCommands() that will activate your script when the appropriate query string is used.
+4) Open [Server.java](src/main/server/Server.java), import your custom command, and add a switch case to Server.executeCommands() that will activate your script when the appropriate query string is used.
 
 5) Use Maven to build a new .jar file and upload it to your AWS Lambda function.
