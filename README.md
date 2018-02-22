@@ -12,9 +12,9 @@ This Github project demonstrates how you can control a computer using an Amazon 
 
 3. Alexa's language interpreting algorithm will use the user defined intent schema and slot definitions to parse the request and determine that the user is requesting the "VLCVolumeUp" intent with an "Amount" slot value of 25 (type AMAZON.NUMBER).
 
-4. The intent and slot value(s) are passed to the user created AWS Lambda function. Here, ComputerControllerSpeechlet.java has defined what should happen for each intent. In this case, a URL query string representing the intent and slot values is created and an HTTP GET request is submitted to the computer's http server.
+4. The intent and slot value(s) are passed to the user created AWS Lambda function. Here, [ComputerControllerSpeechlet.java](/src/main/java/lambdafunction/ComputerControllerSpeechlet.java) has defined what should happen for each intent. In this case, a query string representing the intent and slot values is created and is submitted to the computer's server as an HTTP GET request.
 
-5. The computer's server hears the http GET request and executes the proper command.
+5. The computer's server receives the HTTP GET request and executes the proper command.
 
 ### Usage Example:
 User: "Alexa, tell computer to press stop" <br />
