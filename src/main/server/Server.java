@@ -2,31 +2,29 @@ package main.server;
 
 
 import java.util.*;
-
+import java.awt.AWTException;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.net.InetSocketAddress;
 import java.net.InetAddress;
 
-// import javax.xml.ws.spi.http.HttpExchange;
-// import javax.xml.ws.spi.http.HttpHandler;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
-import java.awt.AWTException;
-import java.awt.Robot;
-import java.awt.event.KeyEvent;
-import java.io.*;
-
 import main.server.VLCCommands;
 
+/**
+ * This is a class for a basic HTTP server that listens for command requests.
+ * Command requests are sent through the query string of a URL.
+ * 
+ */
 public class Server {
 	
 	public static void main(String[] args) throws Exception {
 		HttpServer server = HttpServer.create(new InetSocketAddress(InetAddress.getLocalHost(), 8082), 0);
 		System.out.println(server.getAddress());
-		server.createContext("/test/", new MyHandler());
+		server.createContext("/ComputerController/", new MyHandler());
 		server.setExecutor(null);
 		server.start();
 	}
@@ -35,11 +33,7 @@ public class Server {
 
 		public void handle(HttpExchange exchange) throws IOException {
 			byte [] response = "Alexa Computer Controller".getBytes();
-			// Execute functions here
 			String queryString = exchange.getRequestURI().getQuery();
-			
-			// FOR TESTING PURPOSES
-			System.out.println(queryString);
 			
 			if (queryString == null) { queryString = ""; }
 			
@@ -78,6 +72,9 @@ public class Server {
 		}
 	}
 
+	/*
+	 * executeCommands() links each query string to the corresponding command.
+	 */
 	static public void executeCommands(String param, String value) throws InterruptedException, AWTException {
 		
 		switch (param) {
@@ -142,19 +139,6 @@ public class Server {
 	// Overloaded executeCommands to accept just param argument with no value.
 	static public void executeCommands(String param) throws InterruptedException, AWTException {
 		executeCommands(param, null);
-	}
-	
-	static public void typeHey() throws InterruptedException, AWTException {
-		Robot bot = new Robot();
-		Thread.sleep(2000);
-		bot.keyPress(KeyEvent.VK_H);
-		bot.keyRelease(KeyEvent.VK_H);
-		bot.keyPress(KeyEvent.VK_E);
-		bot.keyRelease(KeyEvent.VK_E);
-		bot.keyPress(KeyEvent.VK_Y);
-		bot.keyRelease(KeyEvent.VK_Y);
-		bot.keyPress(KeyEvent.VK_SPACE);
-		bot.keyRelease(KeyEvent.VK_SPACE);
 	}
 
 

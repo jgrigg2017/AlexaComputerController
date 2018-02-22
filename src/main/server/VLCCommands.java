@@ -5,9 +5,8 @@ import java.awt.Robot;
 import java.awt.event.KeyEvent;
 
 
-/* TODO: Consider creating just one Robot in Server.java to be used and passing reference to it 
- * as an argument in these command functions rather than creating a new Robot during each command execution.
- * 
+/** 
+ * VLCCommands uses java Robot class to activate keyboard shortcuts on VLC.
 */
 public class VLCCommands {
 	
