@@ -138,8 +138,8 @@ public class ComputerControllerSpeechlet implements Speechlet {
                 } else {
                 	volumeDecreasedBy = "5";
                 }
-            	queryString = "VLCVolumeUp=" + volumeDecreasedBy;
-        		speechText = "Increased VLC volume by " + volumeDecreasedBy;
+            	queryString = "VLCVolumeDown=" + volumeDecreasedBy;
+        		speechText = "Decreased VLC volume by " + volumeDecreasedBy;
         		card.setTitle("Command Executed:");
         		break;
 
