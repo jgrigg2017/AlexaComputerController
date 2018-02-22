@@ -1,9 +1,6 @@
 {
 	"intents": [
 		{
-			"intent": "HelloWorldIntent"
-		},
-		{
 			"intent": "AMAZON.HelpIntent"
 		},
 		{
@@ -27,7 +24,14 @@
 		{
 			"intent": "VLCVolumeUpIntent",
 			"slots": [{
-				"name": "Volume",
+				"name": "Amount",
+				"type": "AMAZON.NUMBER"
+			}]
+		},
+				{
+			"intent": "VLCVolumeDownIntent",
+			"slots": [{
+				"name": "Amount",
 				"type": "AMAZON.NUMBER"
 			}]
 		}

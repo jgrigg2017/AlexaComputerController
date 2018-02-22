@@ -1,22 +1,25 @@
-HelloWorldIntent say hello
-HelloWorldIntent say hello world
-HelloWorldIntent hello
-HelloWorldIntent say hi
-HelloWorldIntent say hi world
-HelloWorldIntent hi
-HelloWorldIntent how are you
 VLCPlayIntent press play
 VLCPlayIntent play
 VLCPlayIntent hit play
 VLCPlayIntent start show
 VLCPlayIntent start the show
+VLCPlayIntent play V L C
+VLCPlayIntent start V L C
 VLCPauseIntent press pause
+VLCPauseIntent pause V L C
 VLCStopIntent press stop
+VLCStopIntent stop V L C
 VLCNextIntent play next
 VLCPreviousIntent play previous
 VLCFullscreenIntent enable fullscreen
 VLCFullscreenIntent make VLC fullscreen
 VLCVolumeUpIntent turn the volume up
-VLCVolumeUpIntent turn the volume up by {Volume}
-VLCVolumeUpIntent volume up by {Volume}
+VLCVolumeUpIntent turn the volume up by {Amount}
+VLCVolumeUpIntent volume up by {Amount}
 VLCVolumeUpIntent turn up the volume
+VLCVolumeUpIntent turn V L C volume up
+VLCVolumeDownIntent turn the volume Down
+VLCVolumeDownIntent turn the volume Down by {Amount}
+VLCVolumeDownIntent volume Down by {Amount}
+VLCVolumeDownIntent turn Down the volume
+VLCVolumeDownIntent turn V L C volume down

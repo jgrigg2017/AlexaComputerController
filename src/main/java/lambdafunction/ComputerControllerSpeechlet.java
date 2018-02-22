@@ -27,10 +27,13 @@ import main.java.settings.Settings;
 
 
 /**
- * This sample shows how to create a simple speechlet for handling speechlet requests.
+ * ComputerControllerSpeechlet is the main code used for the Amazon Alexa skill.
+ * It defines what will happen when the skill is launched, exited, and spoken to.
+ * It will be called upon by the AWS Lambda function.
  */
 public class ComputerControllerSpeechlet implements Speechlet {
-	private static final String VOLUME_SLOT = "Volume";
+	// The slot constant string variables refer to the IntentSchema.json slot names.
+	private static final String AMOUNT_SLOT = "Amount";
     private static final Logger log = LoggerFactory.getLogger(ComputerControllerSpeechlet.class);
 
     @Override
@@ -38,7 +41,11 @@ public class ComputerControllerSpeechlet implements Speechlet {
             throws SpeechletException {
         log.info("onSessionStarted requestId={}, sessionId={}", request.getRequestId(),
                 session.getSessionId());
-        // any initialization logic goes here
+        /*
+         * Any initialization logic goes here. 
+         * TODO: Add a check for whether the server is running. 
+         * If not running, issue voice response and exit skill.
+         */
     }
 
     @Override
@@ -54,24 +61,33 @@ public class ComputerControllerSpeechlet implements Speechlet {
             throws SpeechletException {
         log.info("onIntent requestId={}, sessionId={}", request.getRequestId(),
                 session.getSessionId());
-
+        
+        // Retrieve the intent name and slot(s).
         Intent intent = request.getIntent();
         String intentName = (intent != null) ? intent.getName() : null;
         Map<String, Slot> slots = intent.getSlots();
         
+        // urlString will be initialized will all parts except the query string.
+        // speechText will be spoken by Alexa after a command and written on the Simple Card.
         String urlString = Settings.urlString;
         String queryString = "";
         String speechText = "";
         SimpleCard card = new SimpleCard();
+        Slot amountSlot;
+        PlainTextOutputSpeech outputSpeech;
         
+        // Define the speech text, query string, parameter values, and card titles for each Intent.
         switch (intentName) {
+        	case "AMAZON.CancelIntent":
+                outputSpeech = new PlainTextOutputSpeech();
+                outputSpeech.setText("Canceled");
+                return SpeechletResponse.newTellResponse(outputSpeech);
+        	case "AMAZON.StopIntent":
+                outputSpeech = new PlainTextOutputSpeech();
+                outputSpeech.setText("Stopped");
+                return SpeechletResponse.newTellResponse(outputSpeech);
 	    	case "AMAZON.HelpIntent":
 	    		return getHelpResponse();
-        	case "HelloWorldIntent":
-        		speechText = "HelloWorld";
-        		queryString = "VLCPause";
-        		card.setTitle("Command Executed:");
-        		break;
         	case "VLCPlayIntent":
         		speechText = "Pressed Play";
         		queryString = "VLCPlay";
@@ -103,10 +119,10 @@ public class ComputerControllerSpeechlet implements Speechlet {
         		card.setTitle("Command Executed:");
         		break;
         	case "VLCVolumeUpIntent":
-                Slot volumeSlot = slots.get(VOLUME_SLOT);
+                amountSlot = slots.get(AMOUNT_SLOT);
                 String volumeIncreasedBy;
-                if (volumeSlot != null) {
-                	volumeIncreasedBy = volumeSlot.getValue();
+                if (amountSlot != null) {
+                	volumeIncreasedBy = amountSlot.getValue();
                 } else {
                 	volumeIncreasedBy = "5";
                 }
@@ -114,6 +130,19 @@ public class ComputerControllerSpeechlet implements Speechlet {
         		speechText = "Increased VLC volume by " + volumeIncreasedBy;
         		card.setTitle("Command Executed:");
         		break;
+        	case "VLCVolumeDownIntent":
+                amountSlot = slots.get(AMOUNT_SLOT);
+                String volumeDecreasedBy;
+                if (amountSlot != null) {
+                	volumeDecreasedBy = amountSlot.getValue();
+                } else {
+                	volumeDecreasedBy = "5";
+                }
+            	queryString = "VLCVolumeUp=" + volumeDecreasedBy;
+        		speechText = "Increased VLC volume by " + volumeDecreasedBy;
+        		card.setTitle("Command Executed:");
+        		break;
+
         	default:
         		throw new SpeechletException("Invalid Intent");
         }
@@ -123,13 +152,12 @@ public class ComputerControllerSpeechlet implements Speechlet {
         try {
 	        URL url = new URL(urlString + "?" + queryString);
 	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
-	        int responseCode = con.getResponseCode();
 		    con.connect();
 		    con.getInputStream();
         } catch (MalformedURLException e) {
-    		System.out.println("whoops");
+    		System.out.println("Malformed URL Exception");
     	} catch (IOException e) {
-    		System.out.println("whoops");
+    		System.out.println("IO Exception");
     	}
 	    
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
@@ -154,7 +182,7 @@ public class ComputerControllerSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getWelcomeResponse() {
-        String speechText = "Welcome Response";
+        String speechText = "Hello";
 
         // Create the Simple card content.
         SimpleCard card = new SimpleCard();
@@ -180,12 +208,26 @@ public class ComputerControllerSpeechlet implements Speechlet {
      * @return SpeechletResponse spoken and visual response for the given intent
      */
     private SpeechletResponse getHelpResponse() {
-        String speechText = "Use me to control your computer";
+        String speechText = "Use me to control your computer. You can say things like: pause V L C or press play."
+        		+ "Use your Alexa phone app to view more commands.";
 
         // Create the Simple card content.
+        String cardText = "Example commands include: \n"
+        		+ "press play \n"
+        		+ "press stop \n"
+        		+ "press pause \n"
+        		+ "play next \n"
+        		+ "play previous \n"
+        		+ "make VLC fullscreen \n"
+        		+ "turn the volume up \n"
+        		+ "turn the volume up by {number} \n"
+        		+ "turn the volume down \n"
+        		+ "turn the volume down by {number} \n";
+ 
         SimpleCard card = new SimpleCard();
-        card.setTitle("Help Response");
-        card.setContent(speechText);
+        card.setTitle("Help");
+        card.setContent(cardText);
+        
 
         // Create the plain text output.
         PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
