@@ -2,15 +2,15 @@
 
 ## Purpose:
 
-This Github project demonstrates how you can control a computer using an Amazon Alexa device, such as the Amazon Echo or the Alexa phone app. The project provides example code for how to control VLC media player and some basic Windows events like shutting down or restarting the computer using Java's Robot class, which simulates keyboard and mouse events. The code can be easily modified to allow for voice activation of any script on the computer.
+This Github project demonstrates how to control a computer using an Amazon Alexa device, such as an Amazon Echo or the Amazon Alexa phone app. The project provides example code for how to control VLC media player and some basic Windows events like shutting down or restarting the computer using Java's Robot class, which simulates keyboard and mouse events. The code can be easily modified to allow for voice activation of any script on the computer.
 
 ### How it works:
 
 1. The user first starts up a basic http server ([Server.java](src/main/server/Server.java)), which listens for any command requests and executes the associated command scripts. The server should be kept running whenever the computer is on, so that it is always ready to execute Alexa commands.
 
-2. The user speaks a command to their Alexa device, e.g. "Turn up the volume on VLC by 25".
+2. The user speaks a command to their Alexa device, e.g. "Turn up the volume on VLC by 25."
 
-3. Alexa's language interpreting algorithm will use the user defined intent schema and slot definitions to parse the request and determine that the user is requesting the "VLCVolumeUp" intent with an "Amount" slot value of 25 (type AMAZON.NUMBER).
+3. Alexa's language interpreting algorithm will use the user-defined intent schema and slot definitions to parse the request and determine that the user is requesting the "VLCVolumeUp" intent with an "Amount" slot value of 25 (type AMAZON.NUMBER).
 
 4. The intent and slot value(s) are passed to the user created AWS Lambda function. Here, [ComputerControllerSpeechlet.java](/src/main/java/lambdafunction/ComputerControllerSpeechlet.java) has defined what should happen for each intent. In this case, a query string representing the intent and slot values is created and is submitted to the computer's server as an HTTP GET request.
 
@@ -30,7 +30,7 @@ Alexa: "VLC stopped"
 
 2) Clone this Github project to your computer.
 
-3) Edit [Settings-TODO.java](\src\main\java\settings\Settings-TODO.java) to include your computer's WAN IP address and rename the file "Settings.java"
+3) Edit [Settings-TODO.java](/src/main/java/settings/Settings-TODO.java) to include your computer's WAN IP address and rename the file "Settings.java"
 
 4) Unless your computer is directly connected to the internet, you will likely need to set up port forwarding on your router to forward port 80 traffic (the http standard port) to your computer's LAN IP address.
 
@@ -41,7 +41,7 @@ Alexa: "VLC stopped"
 ![](https://i.imgur.com/ZTJSeB0.png)
 
  
-2) You will need to give your skill a name and an [invocation name](https://developer.amazon.com/docs/custom-skills/choose-the-invocation-name-for-a-custom-skill.html). After you save the skill, write down your skill's [Application Id](https://developer.amazon.com/docs/custom-skills/handle-requests-sent-by-alexa.html#getting-the-application-id-for-a-skill) somewhere for use later and also copy/paste it into \src\main\java\settings\Settings.java to update the applicationId string variable.
+2) You will need to give your skill a name and an [invocation name](https://developer.amazon.com/docs/custom-skills/choose-the-invocation-name-for-a-custom-skill.html). After you save the skill, copy/paste your skill's [Application Id](https://developer.amazon.com/docs/custom-skills/handle-requests-sent-by-alexa.html#getting-the-application-id-for-a-skill) into \src\main\java\settings\Settings.java to update the applicationId string variable. Additionally, write down the Application ID. It will be used later during setup of the Lambda function.
 
 ![](https://i.imgur.com/WJT1peI.png)
 
@@ -49,8 +49,8 @@ Alexa: "VLC stopped"
 3) Set up the skill's [speech interface](https://developer.amazon.com/docs/custom-skills/define-the-interaction-model-in-json-and-text.html).
 
 - Select the "Interaction Model" tab on the left side menu.
-- Copy the contents of IntentSchema.json into the "Intent Schema" entry field.
-- Copy the contents of SampleUtterances.txt into the "Sample Utterances" entry field.
+- Copy the contents of [IntentSchema.json](/src/main/java/speechAssets/IntentSchema.json) into the "Intent Schema" entry field.
+- Copy the contents of [SampleUtterances.txt](/src/main/java/speechAssets/SampleUtterances.txt) into the "Sample Utterances" entry field.
 - Click the "Save" button at the bottom of the screen.
 
 ### Building the .jar file:
@@ -64,7 +64,7 @@ mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
 
 ### AWS Lambda Setup:
 
-1) Go to your [AWS lambda console.](https://console.aws.amazon.com/lambda/) AWS Lambda can be used for free for up to 1 million requests per month, which is plenty.
+1) Go to your [AWS Lambda console.](https://console.aws.amazon.com/lambda/) AWS Lambda can be used for free for up to 1 million requests per month, which is plenty.
 
 2) In the top right, make sure your server is set to a region that supports Alexa Skills (Tokyo, Ireland, N. Virginia, or Oregon).
 
@@ -85,7 +85,7 @@ mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
 - Set the Handler as
 "main.java.lambdafunction.ComputerControllerSpeechletRequestStreamHandler"
 - Click "Save" in the top right.
-- Copy the ARN number found in the top right and save it somewhere. This number will be used during the Alexa skill setup.
+- Write down the ARN number found in the top right. This number will be used during the Alexa skill setup.
 
 
 5) Define what will trigger your Lambda function.
@@ -100,11 +100,12 @@ mvn assembly:assembly -DdescriptorId=jar-with-dependencies package
 
 ### Alexa Skill Setup (Part II):
 
-1. Select "Configuration" on the left side panel.
-2. For "Service Endpoint Type" select "AWS Lambda ARN (Amazon Resource Name)."
-3. In the "Default" entry field, enter your Lambda function's ARN that you wrote down earlier. It looks something this: "arn:aws:lambda:us-east-1:58651155688:function:ComputerController"
-4. Select "Next" at the bottom of the screen.
-5. This should complete the setup of your custom Alexa Skill. Make sure your computer is running [Server.java](src/main/server/Server.java) and you can now test your skill either through the Amazon Developer Console or through an Alexa device such as an Amazon Echo that is linked to your Amazon Developer account.
+1. Return to your skill in the Amazon Developer Console.
+2. Select "Configuration" on the left side panel.
+3. For "Service Endpoint Type" select "AWS Lambda ARN (Amazon Resource Name)."
+4. In the "Default" entry field, enter your Lambda function's ARN that you wrote down earlier. It looks something like this: "arn:aws:lambda:us-east-1:58651155688:function:ComputerController"
+5. Select "Next" at the bottom of the screen.
+6. This should complete the setup of your custom Alexa Skill. Make sure your computer is running [Server.java](src/main/server/Server.java) and you can now test your skill either through the Amazon Developer Console or through an Alexa device such as an Amazon Echo that is linked to your Amazon Developer account.
 
 ## Make your own custom commands:
 
