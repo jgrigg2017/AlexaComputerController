@@ -78,6 +78,14 @@ public class ComputerControllerSpeechlet implements Speechlet {
         
         // Define the speech text, query string, parameter values, and card titles for each Intent.
         switch (intentName) {
+    		case "UnknownIntent":
+    			outputSpeech = new PlainTextOutputSpeech();
+    			outputSpeech.setText("I'm sorry, I didn't understand.");
+    			PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+    			repromptSpeech.setText("Could you repeat that?");
+    			Reprompt reprompt = new Reprompt();
+    	        reprompt.setOutputSpeech(repromptSpeech);
+    			return SpeechletResponse.newAskResponse(outputSpeech, reprompt);
         	case "AMAZON.CancelIntent":
                 outputSpeech = new PlainTextOutputSpeech();
                 outputSpeech.setText("Canceled");
@@ -142,6 +150,7 @@ public class ComputerControllerSpeechlet implements Speechlet {
         		speechText = "Decreased VLC volume by " + volumeDecreasedBy;
         		card.setTitle("Command Executed:");
         		break;
+
 
         	default:
         		throw new SpeechletException("Invalid Intent");

@@ -17,9 +17,17 @@ VLCVolumeUpIntent turn the volume up
 VLCVolumeUpIntent turn the volume up by {Amount}
 VLCVolumeUpIntent volume up by {Amount}
 VLCVolumeUpIntent turn up the volume
-VLCVolumeUpIntent turn V L C volume up
-VLCVolumeDownIntent turn the volume Down
-VLCVolumeDownIntent turn the volume Down by {Amount}
-VLCVolumeDownIntent volume Down by {Amount}
-VLCVolumeDownIntent turn Down the volume
+VLCVolumeUpIntent turn V L C volume up 
+VLCVolumeDownIntent turn the volume down
+VLCVolumeDownIntent turn the volume down by {Amount}
+VLCVolumeDownIntent volume down by {Amount}
+VLCVolumeDownIntent turn down the volume
 VLCVolumeDownIntent turn V L C volume down
+UnknownIntent bd
+UnknownIntent bjklkd
+UnknownIntent bddfd
+UnknownIntent bjklkssd
+UnknownIntent bdflkk
+UnknownIntent bjklkdv
+UnknownIntent bdjkd
+UnknownIntent bjklkdvd
