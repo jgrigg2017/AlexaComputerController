@@ -30,6 +30,9 @@ VLCVolumeDownIntent decrease V L C volume
 WinShutdownIntent shutdown Windows
 WinShutdownIntent shutdown computer
 WinShutdownIntent shutdown laptop
+WinShutdownIntent shut down Windows
+WinShutdownIntent shut down computer
+WinShutdownIntent shut down laptop
 WinRestartIntent restart Windows
 WinRestartIntent restart computer
 WinRestartIntent restart laptop
