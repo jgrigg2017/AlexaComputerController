@@ -81,13 +81,7 @@ public class ComputerControllerSpeechlet implements Speechlet {
         // Define the speech text, query string, parameter values, and card titles for each Intent.
         switch (intentName) {
     		case "UnknownIntent":
-    			outputSpeech = new PlainTextOutputSpeech();
-    			outputSpeech.setText("I'm sorry, I didn't understand.");
-    			PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
-    			repromptSpeech.setText("Could you repeat that?");
-    			Reprompt reprompt = new Reprompt();
-    	        reprompt.setOutputSpeech(repromptSpeech);
-    			return SpeechletResponse.newAskResponse(outputSpeech, reprompt);
+    			return didNotUnderstandResponse();
         	case "AMAZON.CancelIntent":
                 outputSpeech = new PlainTextOutputSpeech();
                 outputSpeech.setText("Canceled");
@@ -125,7 +119,10 @@ public class ComputerControllerSpeechlet implements Speechlet {
         	case "VLCVolumeUpIntent":
                 amountSlot = slots.get(AMOUNT_SLOT);
                 String volumeIncreasedBy;
-                if (amountSlot != null) {
+                // "?" value indicates that Alexa was unable to resolve AMOUNT_SLOT to a number.
+                if (amountSlot.getValue() == "?") {
+                	return didNotUnderstandResponse();
+                } else if (amountSlot.getValue() != null) {
                 	volumeIncreasedBy = amountSlot.getValue();
                 } else {
                 	volumeIncreasedBy = "5";
@@ -136,7 +133,10 @@ public class ComputerControllerSpeechlet implements Speechlet {
         	case "VLCVolumeDownIntent":
                 amountSlot = slots.get(AMOUNT_SLOT);
                 String volumeDecreasedBy;
-                if (amountSlot != null) {
+                // "?" value indicates that Alexa was unable to resolve AMOUNT_SLOT to a number.
+                if (amountSlot.getValue() == "?") {
+                	return didNotUnderstandResponse();
+                } else if (amountSlot.getValue() != null) {
                 	volumeDecreasedBy = amountSlot.getValue();
                 } else {
                 	volumeDecreasedBy = "5";
@@ -239,6 +239,15 @@ public class ComputerControllerSpeechlet implements Speechlet {
         return SpeechletResponse.newAskResponse(speech, reprompt, card);
     }
 
+    private SpeechletResponse didNotUnderstandResponse() {
+    	PlainTextOutputSpeech speech = new PlainTextOutputSpeech();
+    	speech.setText("I'm sorry, I didn't understand.");
+		PlainTextOutputSpeech repromptSpeech = new PlainTextOutputSpeech();
+		repromptSpeech.setText("Could you repeat that?");
+		Reprompt reprompt = new Reprompt();
+        reprompt.setOutputSpeech(repromptSpeech);
+		return SpeechletResponse.newAskResponse(speech, reprompt);
+    }
    
 
     /**
