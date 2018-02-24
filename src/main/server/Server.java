@@ -13,6 +13,7 @@ import com.sun.net.httpserver.HttpHandler;
 import com.sun.net.httpserver.HttpServer;
 
 import main.server.VLCCommands;
+import main.server.WindowsFunctions;
 
 /**
  * This is a class for a basic HTTP server that listens for command requests.
@@ -36,7 +37,8 @@ public class Server {
 			String queryString = exchange.getRequestURI().getQuery();
 			
 			if (queryString == null) { queryString = ""; }
-			
+			System.out.println(queryString);
+
 			// Parse the Query String into a list of commands.
 			// Make an ArrayList of the [parameter, value] pairs from the query string.
 			String[] paramValuePairs = queryString.split("&");
@@ -73,9 +75,9 @@ public class Server {
 	}
 
 	/*
-	 * executeCommands() links each query string to the corresponding command.
+	 * executeCommands() links each query string to the corresponding command function.
 	 */
-	static public void executeCommands(String param, String value) throws InterruptedException, AWTException {
+	static public void executeCommands(String param, String value) throws InterruptedException, AWTException, IOException {
 		
 		switch (param) {
 			case "VLCPause":
@@ -131,6 +133,31 @@ public class Server {
 			case "VLCZoom":
 				VLCCommands.changeZoom();
 				break;
+			case "WinShutdown":
+				WindowsFunctions.shutdown();
+				break;
+			case "WinRestart":
+				WindowsFunctions.restart();
+				break;
+			case "WinShutdownAbort":
+				WindowsFunctions.abortShutdown();
+				break;
+			case "WinLogOff":
+				WindowsFunctions.logOff();
+				break;
+			case "WinLock":
+				WindowsFunctions.lock();
+				break;
+			case "WinHibernate":
+				WindowsFunctions.hibernate();
+				break;
+			case "WinMinimizeAll":
+				WindowsFunctions.minimizeAll();
+				break;
+			case "WinMinimizeMost":
+				WindowsFunctions.winHome();
+				break;
+				
 			default:
 				break;
 		}

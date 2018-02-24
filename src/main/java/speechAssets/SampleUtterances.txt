@@ -13,6 +13,8 @@ VLCNextIntent play next
 VLCPreviousIntent play previous
 VLCFullscreenIntent enable fullscreen
 VLCFullscreenIntent make VLC fullscreen
+VLCVolumeUpIntent increase V L C volume
+VLCVolumeUpIntent increase V L C volume by {Amount}
 VLCVolumeUpIntent turn the volume up
 VLCVolumeUpIntent turn the volume up by {Amount}
 VLCVolumeUpIntent volume up by {Amount}
@@ -23,11 +25,56 @@ VLCVolumeDownIntent turn the volume down by {Amount}
 VLCVolumeDownIntent volume down by {Amount}
 VLCVolumeDownIntent turn down the volume
 VLCVolumeDownIntent turn V L C volume down
+VLCVolumeDownIntent decrease V L C volume by {Amount}
+VLCVolumeDownIntent decrease V L C volume
+WinShutdownIntent shutdown Windows
+WinShutdownIntent shutdown computer
+WinShutdownIntent shutdown laptop
+WinRestartIntent restart Windows
+WinRestartIntent restart computer
+WinRestartIntent restart laptop
+WinShutdownAbortIntent abort shutdown
+WinShutdownAbortIntent abort restart
+WinShutdownAbortIntent cancel shutdown
+WinShutdownAbortIntent cancel restart
+WinShutdownAbortIntent stop shutting down
+WinShutdownAbortIntent stop restarting
+WinLogOffIntent log off
+WinLogOffIntent log off of the computer
+WinLogOffIntent log off of Windows
+WinLogOffIntent log off of the laptop
+WinLogOffIntent sign out
+WinLogOffIntent sign out on computer
+WinLogOffIntent sign out of Windows
+WinLogOffIntent sign out on laptop
+WinLockIntent lock
+WinLockIntent lock computer
+WinLockIntent lock Windows
+WinLockIntent lock laptop
+WinLockIntent lock screen
+WinLockIntent lockscreen
+WinLockIntent go to lockscreen
+WinHibernateIntent hibernate
+WinHibernateIntent hibernate Windows
+WinHibernateIntent hibernate computer
+WinHibernateIntent make the computer hibernate
+WinHibernateIntent make the computer go to hibernation
+WinMinimizeAllIntent minimize
+WinMinimizeAllIntent minimize all
+WinMinimizeAllIntent minimize all windows
+WinMinimizeAllIntent minimize everything
+WinMinimizeMostIntent minimize everything else
+WinMinimizeMostIntent minimize all except active window
 UnknownIntent bd
-UnknownIntent bjklkd
-UnknownIntent bddfd
-UnknownIntent bjklkssd
-UnknownIntent bdflkk
-UnknownIntent bjklkdv
+UnknownIntent bjk lkd
+UnknownIntent bdd fd
+UnknownIntent bj klk ssd
+UnknownIntent bdfl jlkk
+UnknownIntent bjkl dfdsa fdjk jkd
 UnknownIntent bdjkd
 UnknownIntent bjklkdvd
+UnknownIntent klkj
+UnknownIntent klkjkjfdj
+UnknownIntent abc
+UnknownIntent acbd
+UnknownIntent bkjdd

@@ -21,6 +21,7 @@ import java.net.URL;
 import java.util.Map;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
+import java.net.SocketTimeoutException;
 import java.io.IOException;
 
 import main.java.settings.Settings;
@@ -72,6 +73,7 @@ public class ComputerControllerSpeechlet implements Speechlet {
         String urlString = Settings.urlString;
         String queryString = "";
         String speechText = "";
+        String cardTitle = "Command Executed:";
         SimpleCard card = new SimpleCard();
         Slot amountSlot;
         PlainTextOutputSpeech outputSpeech;
@@ -99,32 +101,26 @@ public class ComputerControllerSpeechlet implements Speechlet {
         	case "VLCPlayIntent":
         		speechText = "Pressed Play";
         		queryString = "VLCPlay";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCPauseIntent":
         		speechText = "VLC Paused";
         		queryString = "VLCPause";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCStopIntent":
         		speechText = "Pressed Stop";
         		queryString = "VLCStop";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCNextIntent":
         		speechText = "Pressed Next";
         		queryString = "VLCNext";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCPreviousIntent":
         		speechText = "Pressed Previous";
         		queryString = "VLCPrevious";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCFullscreenIntent":
         		speechText = "VLC Fullscreen";
         		queryString = "VLCFullscreen";
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCVolumeUpIntent":
                 amountSlot = slots.get(AMOUNT_SLOT);
@@ -136,7 +132,6 @@ public class ComputerControllerSpeechlet implements Speechlet {
                 }
             	queryString = "VLCVolumeUp=" + volumeIncreasedBy;
         		speechText = "Increased VLC volume by " + volumeIncreasedBy;
-        		card.setTitle("Command Executed:");
         		break;
         	case "VLCVolumeDownIntent":
                 amountSlot = slots.get(AMOUNT_SLOT);
@@ -148,22 +143,57 @@ public class ComputerControllerSpeechlet implements Speechlet {
                 }
             	queryString = "VLCVolumeDown=" + volumeDecreasedBy;
         		speechText = "Decreased VLC volume by " + volumeDecreasedBy;
-        		card.setTitle("Command Executed:");
         		break;
-
-
+        	case "WinShutdownIntent":
+        		speechText = "Shutting Down Computer";
+        		queryString = "WinShutdown";
+        		break;
+        	case "WinRestartIntent":
+        		speechText = "Resarting Computer";
+        		queryString = "WinRestart";
+        		break;
+        	case "WinShutdownAbortIntent":
+        		speechText = "Attempting to abort shutdown.";
+        		queryString = "WinShutdownAbort";
+        		break;
+        	case "WinLogOffIntent":
+        		speechText = "Logging off computer.";
+        		queryString = "WinLogOff";
+        		break;
+        	case "WinLockIntent":
+        		speechText = "Locking computer.";
+        		queryString = "WinLock";
+        		break;
+        	case "WinHibernateIntent":
+        		speechText = "Computer Hibernating";
+        		queryString = "WinHibernate";
+        		break;
+        	case "WinMinimizeAllIntent":
+        		speechText = "Minimizing all windows.";
+        		queryString = "WinMinimizeAll";
+        		break;
+        	case "WinMinimizeMostIntent":
+        		speechText = "Minimizing all except active window.";
+        		queryString = "WinMinimizeMost";
+        		break;
         	default:
         		throw new SpeechletException("Invalid Intent");
         }
         
+        card.setTitle(cardTitle);
 		card.setContent(speechText);
 		
         try {
 	        URL url = new URL(urlString + "?" + queryString);
 	        HttpURLConnection con = (HttpURLConnection) url.openConnection();
+	        con.setConnectTimeout(2000);
 		    con.connect();
 		    con.getInputStream();
-        } catch (MalformedURLException e) {
+        } catch (SocketTimeoutException e) {
+        	PlainTextOutputSpeech timeoutSpeech = new PlainTextOutputSpeech();
+        	timeoutSpeech.setText("Server not available");
+        	return SpeechletResponse.newTellResponse(timeoutSpeech);
+    	} catch (MalformedURLException e) {
     		System.out.println("Malformed URL Exception");
     	} catch (IOException e) {
     		System.out.println("IO Exception");

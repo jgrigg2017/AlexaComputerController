@@ -40,7 +40,33 @@
 				"name": "Amount",
 				"type": "AMAZON.NUMBER"
 			}]
+		},
+		{
+			"intent": "WinShutdownIntent"
+		},
+		{
+			"intent": "WinRestartIntent"
+		},
+		{
+			"intent": "WinShutdownAbortIntent"
+		},
+		{
+			"intent": "WinLogOffIntent"
+		},
+		{
+			"intent": "WinLockIntent"
+		},
+		{
+			"intent": "WinHibernateIntent"
+		},
+		{
+			"intent": "WinMinimizeAllIntent"
+		},
+		{
+			"intent": "WinMinimizeMostIntent"
+		},
+		{
+			"intent": "UnknownIntent"
 		}
-		
 	]
 }
