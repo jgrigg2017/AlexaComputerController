@@ -87,7 +87,6 @@ public class Server {
 				VLCCommands.playPause();
 				break;
 			case "VLCVolumeUp":
-				// TODO: add a check for value == "?". If this is the case, ask the user to repeat the amount.
 				if (value == null) {
 					VLCCommands.volumeUp();
 				} else if (value != "?"){
@@ -103,7 +102,6 @@ public class Server {
 				}
 				break;
 			case "VLCVolumeDown":
-				// TODO: add a check for value == "?". If this is the case, ask the user to repeat the amount.
 				if (value == null) {
 					VLCCommands.volumeDown();
 				} else if (value != "?"){
@@ -164,7 +162,7 @@ public class Server {
 	}
 	
 	// Overloaded executeCommands to accept just param argument with no value.
-	static public void executeCommands(String param) throws InterruptedException, AWTException {
+	static public void executeCommands(String param) throws InterruptedException, AWTException, IOException {
 		executeCommands(param, null);
 	}
 
